@@ -3857,18 +3857,23 @@ void earlyAssert() {
 
 void checkUpdate() {
   if (!isWeb) {
-    if (!bind.isCustomClient()) {
-      platformFFI.registerEventHandler(
-          kCheckSoftwareUpdateFinish, kCheckSoftwareUpdateFinish,
-          (Map<String, dynamic> evt) async {
-        if (evt['url'] is String) {
-          stateGlobal.updateUrl.value = evt['url'];
-        }
-      });
-      Timer(const Duration(seconds: 1), () async {
-        bind.mainGetSoftwareUpdateUrl();
-      });
-    }
+    // 无论是否为自定义客户端，都执行更新检查，但不显示更新提示
+    platformFFI.registerEventHandler(
+        kCheckSoftwareUpdateFinish, kCheckSoftwareUpdateFinish,
+        (Map<String, dynamic> evt) async {
+      // 注释掉更新URL赋值，这样UI就不会显示更新提示
+      // if (evt['url'] is String) {
+      //   stateGlobal.updateUrl.value = evt['url'];
+      // }
+      // 记录日志以便调试
+      if (evt['url'] is String) {
+        debugPrint('检测到软件更新，但已配置为不显示更新提示: ${evt['url']}');
+      }
+    });
+    // 无论用户设置如何，都执行更新检查
+    Timer(const Duration(seconds: 1), () async {
+      bind.mainGetSoftwareUpdateUrl();
+    });
   }
 }
 
