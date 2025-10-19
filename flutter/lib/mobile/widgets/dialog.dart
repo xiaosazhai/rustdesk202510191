@@ -276,7 +276,7 @@ void showServerSettingsWithValue(
                   ),
                   SizedBox(height: 8),
                   // 隐藏key字段
-                  Offstage()
+                  Offstage(),
                   if (isInProgress)
                     Padding(
                       padding: EdgeInsets.only(top: 8),
