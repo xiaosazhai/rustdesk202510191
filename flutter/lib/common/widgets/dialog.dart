@@ -1579,7 +1579,7 @@ void showConfirmSwitchSidesDialog(
 
     return CustomAlertDialog(
       content: msgboxContent('info', 'Switch Sides',
-          'Please confirm if you want to share your desktop?'),
+          'Please confirm if you want to share Your yingke desktop?'),
       actions: [
         dialogButton('Cancel', onPressed: close, isOutline: true),
         dialogButton('OK', onPressed: submit),

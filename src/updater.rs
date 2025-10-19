@@ -35,8 +35,7 @@ pub fn start_auto_update() {
 
 #[allow(dead_code)]
 pub fn manually_check_update() -> ResultType<()> {
-    let sender = TX_MSG.lock().unwrap();
-    sender.send(UpdateMsg::CheckUpdate)?;
+    // 禁用手动更新检查
     Ok(())
 }
 
@@ -76,8 +75,8 @@ fn has_no_controlling_conns() -> bool {
 }
 
 fn start_auto_update_check() -> Sender<UpdateMsg> {
-    let (tx, rx) = channel();
-    std::thread::spawn(move || start_auto_update_check_(rx));
+    // 禁用自动更新检查
+    let (tx, _rx) = channel();
     return tx;
 }
 

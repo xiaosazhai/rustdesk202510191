@@ -2,7 +2,7 @@ lazy_static::lazy_static! {
 pub static ref T: std::collections::HashMap<&'static str, &'static str> =
     [
         ("Status", "상태"),
-        ("Your Desktop", "내 데스크탑"),
+        ("Your yingke desktop", "내 데스크탑"),
         ("desk_tip", "이 ID와 비밀번호로 데스크톱에 액세스할 수 있습니다."),
         ("Password", "비밀번호"),
         ("Ready", "준비 완료"),
@@ -429,7 +429,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Medium", "보통"),
         ("Strong", "강력"),
         ("Switch Sides", "측면 전환"),
-        ("Please confirm if you want to share your desktop?", "데스크탑을 공유하시겠습니까?"),
+        ("Please confirm if you want to share Your yingke desktop?", "데스크탑을 공유하시겠습니까?"),
         ("Display", "디스플레이"),
         ("Default View Style", "기본 보기 스타일"),
         ("Default Scroll Style", "기본 스크롤 스타일"),

@@ -2,7 +2,7 @@ lazy_static::lazy_static! {
 pub static ref T: std::collections::HashMap<&'static str, &'static str> =
     [
         ("Status", "Egoera"),
-        ("Your Desktop", "Zure mahaigaina"),
+        ("Your yingke desktop", "Zure mahaigaina"),
         ("desk_tip", "Mahaigainera zure ID eta pasahitzarekin sartu zaitezke"),
         ("Password", "Pasahitza"),
         ("Ready", "Prest"),
@@ -429,7 +429,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Medium", "Ertaina"),
         ("Strong", "Indartsua"),
         ("Switch Sides", "Aldatu aldeak"),
-        ("Please confirm if you want to share your desktop?", "Mesedez, berretsi zure mahaigaina partekatu nahi duzula"),
+        ("Please confirm if you want to share Your yingke desktop?", "Mesedez, berretsi zure mahaigaina partekatu nahi duzula"),
         ("Display", "Pantaila"),
         ("Default View Style", "Ikuspen estilo lehenetsia"),
         ("Default Scroll Style", "Korritze estilo lehenetsia"),

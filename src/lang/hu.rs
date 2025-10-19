@@ -2,7 +2,7 @@ lazy_static::lazy_static! {
 pub static ref T: std::collections::HashMap<&'static str, &'static str> =
     [
         ("Status", "Állapot"),
-        ("Your Desktop", "Saját számítógép"),
+        ("Your yingke desktop", "Saját számítógép"),
         ("desk_tip", "A számítógép ezzel a jelszóval és azonosítóval érhető el távolról."),
         ("Password", "Jelszó"),
         ("Ready", "Kész"),
@@ -429,7 +429,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Medium", "Közepes"),
         ("Strong", "Erős"),
         ("Switch Sides", "Oldalváltás"),
-        ("Please confirm if you want to share your desktop?", "Erősítse meg, hogy meg akarja-e osztani az asztalát?"),
+        ("Please confirm if you want to share Your yingke desktop?", "Erősítse meg, hogy meg akarja-e osztani az asztalát?"),
         ("Display", "Képernyő"),
         ("Default View Style", "Alapértelmezett megjelenítés"),
         ("Default Scroll Style", "Alapértelmezett görgetés"),
