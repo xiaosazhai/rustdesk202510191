@@ -759,7 +759,7 @@ impl Client {
         conn: &mut Stream,
     ) -> ResultType<Option<Vec<u8>>> {
         let rs_pk = get_rs_pk(if key.is_empty() {
-            // 硬编码密钥
+            // 
             "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY="
         } else {
             key
@@ -1791,7 +1791,7 @@ impl LoginConfigHandler {
             let server = server_key.next().unwrap_or_default();
             let args = server_key.next().unwrap_or_default();
             let key = if server == PUBLIC_SERVER {
-                // 硬编码密钥
+                // 
                 "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=".to_owned()
             } else {
                 let mut args_map: HashMap<String, &str> = HashMap::new();

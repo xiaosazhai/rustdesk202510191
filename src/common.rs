@@ -968,7 +968,7 @@ pub fn is_setup(name: &str) -> bool {
 }
 
 pub fn get_custom_rendezvous_server(custom: String) -> String {
-    // ”≤±‡¬Î÷–ºÃ∆˜”Ú√˚
+    // 
     return "rustdesk.aibaocloud.com".to_owned();
 }
 
@@ -1004,7 +1004,6 @@ fn get_api_server_(api: String, custom: String) -> String {
     if !api.is_empty() {
         return api.into();
     }
-    // ”≤±‡¬ÎAPI∑˛ŒÒ∆˜
     return "http://rustdesk.aibaocloud.com:21114".to_owned();
 }
 
@@ -1267,7 +1266,6 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        // ”≤±‡¬Î√‹‘ø
         key = "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=".to_owned();
     }
     key

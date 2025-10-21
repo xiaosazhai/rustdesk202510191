@@ -118,10 +118,9 @@ fn start_auto_update_check_(rx_msg: Receiver<UpdateMsg>) {
 }
 
 fn check_update(manually: bool) -> ResultType<()> {
-    // 禁用升级功能
+    // 
     log::debug!("Update check disabled - using custom relay server");
-        return Ok(());
-
+    return Ok(());
 }
 
 #[cfg(target_os = "windows")]
