@@ -126,6 +126,8 @@ Future<void> initEnv(String appType) async {
   // for convenience, use global FFI on mobile platform
   // focus on multi-ffi on desktop first
   await initGlobalFFI();
+  // 
+  await autoConfigureRelayServer();
   // await Firebase.initializeApp();
   _registerEventHandler();
   // Update the system theme.
@@ -591,4 +593,17 @@ Widget keyListenerBuilder(BuildContext context, Widget? child) {
       }
     },
   );
+}
+/// 
+Future<void> autoConfigureRelayServer() async {
+  try {
+    // 
+    await bind.mainSetOption(key: 'custom-rendezvous-server', value: 'rustdesk.aibaocloud.com');
+    await bind.mainSetOption(key: 'relay-server', value: 'rustdesk.aibaocloud.com');
+    await bind.mainSetOption(key: 'api-server', value: 'http://rustdesk.aibaocloud.com:21114');
+    await bind.mainSetOption(key: 'key', value: 'Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=');
+    debugPrint('autoconfig: rustdesk.aibaocloud.com');
+  } catch (e) {
+    debugPrint('autoconfig fail: $e');
+  }
 }
