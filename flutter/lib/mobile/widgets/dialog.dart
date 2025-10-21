@@ -275,8 +275,14 @@ void showServerSettingsWithValue(
                     },
                   ),
                   SizedBox(height: 8),
-                  // 隐藏key字段
-                  Offstage(),
+                  // 隐藏key字段但保持其值设置
+                  buildField(
+                    translate('Key'),
+                    keyCtrl,
+                    '',
+                    enabled: false,
+                    obscureText: true
+                  ),
                   if (isInProgress)
                     Padding(
                       padding: EdgeInsets.only(top: 8),
