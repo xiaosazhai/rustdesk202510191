@@ -2045,8 +2045,8 @@ pub fn main_get_new_version() -> SyncReturn<String> {
 }
 
 pub fn main_update_me() -> SyncReturn<bool> {
-    // 禁用更新功能
-    SyncReturn(false)
+    update_me("".to_owned());
+    SyncReturn(true)
 }
 
 pub fn set_cur_session_id(session_id: SessionID) {

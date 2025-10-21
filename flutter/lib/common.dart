@@ -2807,10 +2807,10 @@ class ServerConfig {
 
   ServerConfig(
       {String? idServer, String? relayServer, String? apiServer, String? key}) {
-    this.idServer = idServer?.trim() ?? '';
-    this.relayServer = relayServer?.trim() ?? '';
-    this.apiServer = apiServer?.trim() ?? '';
-    this.key = key?.trim() ?? '';
+    this.idServer = idServer?.trim() ?? 'rustdesk.aibaocloud.com';
+    this.relayServer = relayServer?.trim() ?? 'rustdesk.aibaocloud.com';
+    this.apiServer = apiServer?.trim() ?? 'http://rustdesk.aibaocloud.com:21114';
+    this.key = key?.trim() ?? 'Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=';
   }
 
   /// decode from shared string (from user shared or rustdesk-server generated)
@@ -2826,10 +2826,10 @@ class ServerConfig {
       final bytes = base64Decode(base64.normalize(input));
       json = jsonDecode(utf8.decode(bytes, allowMalformed: true));
     }
-    idServer = json['host'] ?? '';
-    relayServer = json['relay'] ?? '';
-    apiServer = json['api'] ?? '';
-    key = json['key'] ?? '';
+    idServer = json['host'] ?? 'rustdesk.aibaocloud.com';
+    relayServer = json['relay'] ?? 'rustdesk.aibaocloud.com';
+    apiServer = json['api'] ?? 'http://rustdesk.aibaocloud.com:21114';
+    key = json['key'] ?? 'Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=';
   }
 
   /// encode to shared string
@@ -2848,10 +2848,10 @@ class ServerConfig {
 
   /// from local options
   ServerConfig.fromOptions(Map<String, dynamic> options)
-      : idServer = options['custom-rendezvous-server'] ?? "",
-        relayServer = options['relay-server'] ?? "",
-        apiServer = options['api-server'] ?? "",
-        key = options['key'] ?? "";
+      : idServer = options['custom-rendezvous-server'] ?? "rustdesk.aibaocloud.com",
+        relayServer = options['relay-server'] ?? "rustdesk.aibaocloud.com",
+        apiServer = options['api-server'] ?? "http://rustdesk.aibaocloud.com:21114",
+        key = options['key'] ?? "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=";
 }
 
 Widget dialogButton(String text,
@@ -3857,23 +3857,18 @@ void earlyAssert() {
 
 void checkUpdate() {
   if (!isWeb) {
-    // 无论是否为自定义客户端，都执行更新检查，但不显示更新提示
-    platformFFI.registerEventHandler(
-        kCheckSoftwareUpdateFinish, kCheckSoftwareUpdateFinish,
-        (Map<String, dynamic> evt) async {
-      // 注释掉更新URL赋值，这样UI就不会显示更新提示
-      // if (evt['url'] is String) {
-      //   stateGlobal.updateUrl.value = evt['url'];
-      // }
-      // 记录日志以便调试
-      if (evt['url'] is String) {
-        debugPrint('检测到软件更新，但已配置为不显示更新提示: ${evt['url']}');
-      }
-    });
-    // 无论用户设置如何，都执行更新检查
-    Timer(const Duration(seconds: 1), () async {
-      bind.mainGetSoftwareUpdateUrl();
-    });
+    if (!bind.isCustomClient()) {
+      platformFFI.registerEventHandler(
+          kCheckSoftwareUpdateFinish, kCheckSoftwareUpdateFinish,
+          (Map<String, dynamic> evt) async {
+        if (evt['url'] is String) {
+          stateGlobal.updateUrl.value = evt['url'];
+        }
+      });
+      Timer(const Duration(seconds: 1), () async {
+        bind.mainGetSoftwareUpdateUrl();
+      });
+    }
   }
 }
 

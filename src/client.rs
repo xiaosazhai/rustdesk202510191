@@ -281,16 +281,10 @@ impl Client {
         }
 
         let other_server = interface.get_lch().read().unwrap().other_server.clone();
-        // 确保始终使用正确的key值，优先使用传入的key，如果为空则从配置中获取
-        let mut effective_key = key.to_owned();
-        if effective_key.is_empty() {
-            effective_key = crate::get_key(true).await;
-        }
-        
-        let (peer, other_server, _, token) = if let Some((a, b, _)) = other_server.as_ref() {
-            (a.as_ref(), b.as_ref(), "", "")
+        let (peer, other_server, key, token) = if let Some((a, b, c)) = other_server.as_ref() {
+            (a.as_ref(), b.as_ref(), c.as_ref(), "")
         } else {
-            (peer, "", "", token)
+            (peer, "", key, token)
         };
         let (rendezvous_server, servers, contained) = if other_server.is_empty() {
             crate::get_rendezvous_server(1_000).await
@@ -335,7 +329,7 @@ impl Client {
         };
         let fut = Self::_start_inner(
             peer.to_owned(),
-            effective_key.clone(),
+            key.to_owned(),
             token.to_owned(),
             conn_type,
             interface.clone(),
@@ -352,7 +346,7 @@ impl Client {
         connect_futures.push(fut.boxed());
         let fut = Self::_start_inner(
             peer.to_owned(),
-            effective_key,
+            key.to_owned(),
             token.to_owned(),
             conn_type,
             interface,
@@ -499,13 +493,7 @@ impl Client {
                                     bail!("Remote desktop is offline");
                                 }
                                 Ok(punch_hole_response::Failure::LICENSE_MISMATCH) => {
-                                    let current_key = crate::get_key(true).await;
-                                    let key_suffix = if current_key.len() > 10 {
-                                        &current_key[current_key.len() - 10..]
-                                    } else {
-                                        &current_key
-                                    };
-                                    bail!("Key mismatch (尾号:{})".to_owned() + key_suffix);
+                                    bail!("Key mismatch");
                                 }
                                 Ok(punch_hole_response::Failure::LICENSE_OVERUSE) => {
                                     bail!("Key overuse");
@@ -771,7 +759,8 @@ impl Client {
         conn: &mut Stream,
     ) -> ResultType<Option<Vec<u8>>> {
         let rs_pk = get_rs_pk(if key.is_empty() {
-            config::RS_PUB_KEY
+            // 硬编码密钥
+            "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY="
         } else {
             key
         });
@@ -1802,7 +1791,8 @@ impl LoginConfigHandler {
             let server = server_key.next().unwrap_or_default();
             let args = server_key.next().unwrap_or_default();
             let key = if server == PUBLIC_SERVER {
-                config::RS_PUB_KEY.to_owned()
+                // 硬编码密钥
+                "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=".to_owned()
             } else {
                 let mut args_map: HashMap<String, &str> = HashMap::new();
                 for arg in args.split('&') {

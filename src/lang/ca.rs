@@ -2,8 +2,8 @@ lazy_static::lazy_static! {
 pub static ref T: std::collections::HashMap<&'static str, &'static str> =
     [
         ("Status", "Estat"),
-        ("Your yingke desktop", "Aquest ordinador"),
-        ("desk_tip", "Es pot accedir a aquest equip mitjançant les credencials,only allow run aibao device!"),
+        ("Your Desktop", "Aquest ordinador"),
+        ("desk_tip", "Es pot accedir a aquest equip mitjançant les credencials:"),
         ("Password", "Contrasenya"),
         ("Ready", "Preparat."),
         ("Established", "S'ha establert."),
@@ -429,7 +429,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Medium", "Acceptable"),
         ("Strong", "Segura"),
         ("Switch Sides", "Inverteix la connexió"),
-        ("Please confirm if you want to share Your yingke desktop?", "Realment voleu que es controli aquest equip?"),
+        ("Please confirm if you want to share your desktop?", "Realment voleu que es controli aquest equip?"),
         ("Display", "Pantalla"),
         ("Default View Style", "Estil de vista per defecte"),
         ("Default Scroll Style", "Estil de desplaçament per defecte"),

@@ -570,22 +570,21 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           gFFI.invokeMethod(AndroidChannel.kSetStartOnBootOpt, toValue);
         }));
 
-    // 隐藏更新检查开关，但确保在内部设置为启用状态
-    // if (!bind.isCustomClient()) {
-    //   enhancementsTiles.add(
-    //     SettingsTile.switchTile(
-    //       initialValue: _checkUpdateOnStartup,
-    //       title:
-    //           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    //         Text(translate('Check for software update on startup')),
-    //       ]),
-    //       onToggle: (bool toValue) async {
-    //         await mainSetLocalBoolOption(kOptionEnableCheckUpdate, toValue);
-    //         setState(() => _checkUpdateOnStartup = toValue);
-    //       },
-    //     ),
-    //   );
-    // }
+    if (!bind.isCustomClient()) {
+      enhancementsTiles.add(
+        SettingsTile.switchTile(
+          initialValue: _checkUpdateOnStartup,
+          title:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(translate('Check for software update on startup')),
+          ]),
+          onToggle: (bool toValue) async {
+            await mainSetLocalBoolOption(kOptionEnableCheckUpdate, toValue);
+            setState(() => _checkUpdateOnStartup = toValue);
+          },
+        ),
+      );
+    }
 
     onFloatingWindowChanged(bool toValue) async {
       if (toValue) {

@@ -899,8 +899,13 @@ pub fn is_modifier(evt: &KeyEvent) -> bool {
 }
 
 pub fn check_software_update() {
-    // Á¶ÅÁî®Êõ¥Êñ∞Ê£ÄÊü•ÂäüËÉΩ
-    return;
+    if is_custom_client() {
+        return;
+    }
+    let opt = LocalConfig::get_option(keys::OPTION_ENABLE_CHECK_UPDATE);
+    if config::option2bool(keys::OPTION_ENABLE_CHECK_UPDATE, &opt) {
+        std::thread::spawn(move || allow_err!(do_check_software_update()));
+    }
 }
 
 #[tokio::main(flavor = "current_thread")]
@@ -963,19 +968,8 @@ pub fn is_setup(name: &str) -> bool {
 }
 
 pub fn get_custom_rendezvous_server(custom: String) -> String {
-    #[cfg(windows)]
-    if let Ok(lic) = crate::platform::windows::get_license_from_exe_name() {
-        if !lic.host.is_empty() {
-            return lic.host.clone();
-        }
-    }
-    if !custom.is_empty() {
-        return custom;
-    }
-    if !config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty() {
-        return config::PROD_RENDEZVOUS_SERVER.read().unwrap().clone();
-    }
-    "".to_owned()
+    // ”≤±‡¬Î÷–ºÃ∆˜”Ú√˚
+    return "rustdesk.aibaocloud.com".to_owned();
 }
 
 #[inline]
@@ -1010,16 +1004,8 @@ fn get_api_server_(api: String, custom: String) -> String {
     if !api.is_empty() {
         return api.into();
     }
-    let s0 = get_custom_rendezvous_server(custom);
-    if !s0.is_empty() {
-        let s = crate::increase_port(&s0, -2);
-        if s == s0 {
-            return format!("http://{}:{}", s, config::RENDEZVOUS_PORT - 2);
-        } else {
-            return format!("http://{}", s);
-        }
-    }
-    "https://admin.rustdesk.com".to_owned()
+    // ”≤±‡¬ÎAPI∑˛ŒÒ∆˜
+    return "http://rustdesk.aibaocloud.com:21114".to_owned();
 }
 
 #[inline]
@@ -1281,7 +1267,8 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = config::RS_PUB_KEY.to_owned();
+        // ”≤±‡¬Î√‹‘ø
+        key = "Pk3HqWa8J38QY2lJuM8frQhLIoKp9dYmlQz7rUmEWmY=".to_owned();
     }
     key
 }

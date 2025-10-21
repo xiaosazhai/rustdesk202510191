@@ -127,38 +127,9 @@ Future<void> initEnv(String appType) async {
   // focus on multi-ffi on desktop first
   await initGlobalFFI();
   // await Firebase.initializeApp();
-  
-  // 设置固定的服务器配置
-  await _setFixedServerConfig();
-  
   _registerEventHandler();
   // Update the system theme.
   updateSystemWindowTheme();
-}
-
-// 设置固定的服务器配置和更新检查选项
-Future<void> _setFixedServerConfig() async {
-  try {
-    // 使用固定的服务器配置
-    final String idServer = 'rustdesk.aibaocloud.com';
-    final String relayServer = 'rustdesk.aibaocloud.com';
-    final String apiServer = '';
-    final String key = 'Pk3HqWaJ8J38QY2JuU6Mr8qHLLKop9dYmlQZ7uUmEWmY=';
-    
-    // 设置服务器配置
-    await bind.mainSetOption(key: 'custom-rendezvous-server', value: idServer);
-    await bind.mainSetOption(key: 'relay-server', value: relayServer);
-    await bind.mainSetOption(key: 'api-server', value: apiServer);
-    await bind.mainSetOption(key: 'key', value: key);
-    
-    // 自动启用更新检查选项，确保应用启动时会检查更新
-    await mainSetLocalBoolOption(kOptionEnableCheckUpdate, true);
-    
-    print('固定服务器配置已设置');
-    print('自动更新检查已启用');
-  } catch (e) {
-    print('设置固定服务器配置或更新选项时出错: $e');
-  }
 }
 
 void runMainApp(bool startService) async {

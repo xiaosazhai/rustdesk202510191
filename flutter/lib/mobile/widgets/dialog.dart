@@ -148,24 +148,22 @@ void setTemporaryPasswordLengthDialog(
 }
 
 void showServerSettings(OverlayDialogManager dialogManager) async {
-  // 使用固定的服务器配置
-  showServerSettingsWithValue(ServerConfig(
-    idServer: 'rustdesk.aibaocloud.com',
-    relayServer: 'rustdesk.aibaocloud.com',
-    apiServer: '',
-    key: 'Pk3HqWaJ8J38QY2JuU6Mr8qHLLKop9dYmlQZ7uUmEWmY='
-  ), dialogManager);
+  Map<String, dynamic> options = {};
+  try {
+    options = jsonDecode(await bind.mainGetOptions());
+  } catch (e) {
+    print("Invalid server config: $e");
+  }
+  showServerSettingsWithValue(ServerConfig.fromOptions(options), dialogManager);
 }
 
 void showServerSettingsWithValue(
     ServerConfig serverConfig, OverlayDialogManager dialogManager) async {
   var isInProgress = false;
-  // 使用固定值且不可编辑
-  final idCtrl = TextEditingController(text: 'rustdesk.aibaocloud.com');
-  final relayCtrl = TextEditingController(text: 'rustdesk.aibaocloud.com');
-  final apiCtrl = TextEditingController(text: '');
-  // key使用固定值但不显示
-  final keyCtrl = TextEditingController(text: 'Pk3HqWaJ8J38QY2JuU6Mr8qHLLKop9dYmlQZ7uUmEWmY=');
+  final idCtrl = TextEditingController(text: serverConfig.idServer);
+  final relayCtrl = TextEditingController(text: serverConfig.relayServer);
+  final apiCtrl = TextEditingController(text: serverConfig.apiServer);
+  final keyCtrl = TextEditingController(text: serverConfig.key);
 
   RxString idServerMsg = ''.obs;
   RxString relayServerMsg = ''.obs;
@@ -199,7 +197,7 @@ void showServerSettingsWithValue(
 
     Widget buildField(
         String label, TextEditingController controller, String errorMsg,
-        {String? Function(String?)? validator, bool autofocus = false, bool enabled = true, bool obscureText = false}) {
+        {String? Function(String?)? validator, bool autofocus = false}) {
       if (isDesktop || isWeb) {
         return Row(
           children: [
@@ -211,8 +209,6 @@ void showServerSettingsWithValue(
             Expanded(
               child: TextFormField(
                 controller: controller,
-                enabled: enabled,
-                obscureText: obscureText,
                 decoration: InputDecoration(
                   errorText: errorMsg.isEmpty ? null : errorMsg,
                   contentPadding:
@@ -228,8 +224,6 @@ void showServerSettingsWithValue(
 
       return TextFormField(
         controller: controller,
-        enabled: enabled,
-        obscureText: obscureText,
         decoration: InputDecoration(
           labelText: label,
           errorText: errorMsg.isEmpty ? null : errorMsg,
@@ -252,18 +246,17 @@ void showServerSettingsWithValue(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   buildField(translate('ID Server'), idCtrl, idServerMsg.value,
-                      autofocus: true, enabled: false),
+                      autofocus: true),
                   SizedBox(height: 8),
                   if (!isIOS && !isWeb) ...[
                     buildField(translate('Relay Server'), relayCtrl,
-                        relayServerMsg.value, enabled: false),
+                        relayServerMsg.value),
                     SizedBox(height: 8),
                   ],
                   buildField(
                     translate('API Server'),
                     apiCtrl,
                     apiServerMsg.value,
-                    enabled: false,
                     validator: (v) {
                       if (v != null && v.isNotEmpty) {
                         if (!(v.startsWith('http://') ||
@@ -275,14 +268,7 @@ void showServerSettingsWithValue(
                     },
                   ),
                   SizedBox(height: 8),
-                  // 隐藏key字段但保持其值设置
-                  buildField(
-                    translate('Key'),
-                    keyCtrl,
-                    '',
-                    enabled: false,
-                    obscureText: true
-                  ),
+                  buildField('Key', keyCtrl, ''),
                   if (isInProgress)
                     Padding(
                       padding: EdgeInsets.only(top: 8),

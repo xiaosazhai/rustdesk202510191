@@ -2,7 +2,7 @@ lazy_static::lazy_static! {
 pub static ref T: std::collections::HashMap<&'static str, &'static str> =
     [
         ("Status", "Statuss"),
-        ("Your yingke desktop", "Jūsu darbvirsma"),
+        ("Your Desktop", "Jūsu darbvirsma"),
         ("desk_tip", "Jūsu darbvirsmai var piekļūt ar šo ID un paroli."),
         ("Password", "Parole"),
         ("Ready", "Gatavs"),
@@ -429,7 +429,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Medium", "Vidējs"),
         ("Strong", "Spēcīgs"),
         ("Switch Sides", "Pārslēgt puses"),
-        ("Please confirm if you want to share Your yingke desktop?", "Lūdzu, apstipriniet, vai vēlaties koplietot savu darbvirsmu?"),
+        ("Please confirm if you want to share your desktop?", "Lūdzu, apstipriniet, vai vēlaties koplietot savu darbvirsmu?"),
         ("Display", "Displejs"),
         ("Default View Style", "Noklusējuma skata stils"),
         ("Default Scroll Style", "Noklusējuma ritināšanas stils"),
