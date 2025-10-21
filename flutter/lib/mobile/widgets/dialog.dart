@@ -236,7 +236,8 @@ void showServerSettingsWithValue(
       title: Row(
         children: [
           Expanded(child: Text(translate('ID/Relay Server'))),
-          ...ServerConfigImportExportWidgets(controllers, errMsgs),
+          // 
+          // ...ServerConfigImportExportWidgets(controllers, errMsgs),
         ],
       ),
       content: ConstrainedBox(
@@ -267,8 +268,9 @@ void showServerSettingsWithValue(
                       return null;
                     },
                   ),
-                  SizedBox(height: 8),
-                  buildField('Key', keyCtrl, ''),
+                  // 
+                  // SizedBox(height: 8),
+                  // buildField('Key', keyCtrl, ''),
                   if (isInProgress)
                     Padding(
                       padding: EdgeInsets.only(top: 8),
